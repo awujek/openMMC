@@ -26,6 +26,7 @@
 
 #include "port.h"
 #include "stm32_pincfg.h"
+#include "pin_mapping.h"
 
 /**
  * @brief       Sets I/O Control pin mux
@@ -35,14 +36,8 @@
  */
 #define PIN_PORT( pin_def )      ((pin_def & 0xFF000000) >> 24)
 
-void pin_config(void *cfg)
-//uint8_t port, uint8_t pin, uint8_t func, uint8_t dir)
-// void pin_config(int port, int pin, GPIOMode_TypeDef func, GPIOPuPd_TypeDef dir)
+void enable_PeriphClock(int port)
 {
-  //printf("stm32_gpio_configure port %p pin %08x\n", port, pin->pin );
-    uint32_t *pin_cfg = cfg;
-    uint8_t port = PIN_PORT(*(uint32_t *)cfg);
-
     if (port == PORTA)
         RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
     else if (port == PORTB)
@@ -53,10 +48,19 @@ void pin_config(void *cfg)
         RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOD, ENABLE);
     else if (port == PORTE)
         RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE, ENABLE);
+}
 
-    if ( PIN_DIR(*pin_cfg) != NON_GPIO ) {
-        /* Config GPIO direction */
-        gpio_set_pin_dir( PIN_PORT(*pin_cfg), PIN_NUMBER(*pin_cfg), PIN_FUNC(*pin_cfg), PIN_DIR(*pin_cfg));
+void pin_init( void )
+{
+    uint8_t i;
+
+    for ( i = 0; i < GPIO_MAX; i++ ) {
+	enable_PeriphClock(gpio_pins_def[i].port);
+	
+        if ( gpio_pins_def[i].mode != GPIO_Mode_AF ) {
+            /* Config GPIO direction */
+            gpio_set_pin_dir( gpio_pins_def[i].port, gpio_pins_def[i].pin, gpio_pins_def[i].pupd, gpio_pins_def[i].mode);
+        }
     }
 }
 

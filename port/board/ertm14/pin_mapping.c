@@ -37,24 +37,16 @@
  * @{
  */
 
-#ifndef PIN_MAPPING_H_
-#define PIN_MAPPING_H_
+#include "port.h"
+#include "pin_mapping.h"
 
-enum pin_enum {
-    GPIO_LEDGREEN = 0,
-    GPIO_LEDRED = 1,
-    GPIO_SYNC_LEDGREEN,
-    GPIO_SYNC_LEDRED,
-    GPIO_MAX
+
+struct pin_def gpio_pins_def[GPIO_MAX] = 
+{
+    [GPIO_LEDGREEN] = {PORTA, 12, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+    [GPIO_LEDRED]   = {PORTA, 11, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+    [GPIO_SYNC_LEDGREEN] = {PORTA, 10, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+    [GPIO_SYNC_LEDRED]   = {PORTA, 9, GPIO_Mode_OUT, GPIO_PuPd_DOWN}
+
 };
 
-extern struct pin_def gpio_pins_def[GPIO_MAX];
-
-/* UART Interfaces */
-#define UART_DEBUG      1
-
-#endif
-
-/**
- * @}
- */

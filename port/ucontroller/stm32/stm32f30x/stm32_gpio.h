@@ -30,6 +30,14 @@
 
 GPIO_TypeDef* gpio_addr[PORTS_MAX];
 
+struct pin_def {
+uint8_t port;
+uint8_t pin;
+GPIOMode_TypeDef mode;
+GPIOPuPd_TypeDef pupd;
+};
+
+
 /**
  * @brief       Initialize GPIO block
  * @return      Nothing

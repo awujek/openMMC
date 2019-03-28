@@ -37,12 +37,11 @@ typedef struct stm32_uart_cfg {
     GPIO_TypeDef *port;
     uint8_t pin_TX;
     uint8_t gpio_af_TX;
-    
-// { USART1, RCC_APB2Periph_USART1, RCC_AHBPeriph_GPIOC, GPIOC, GPIO_PinSource4, GPIO_AF_7 },
-    
+    GPIO_InitTypeDef GPIO_InitStructure;
+    USART_InitTypeDef USART_InitStructure;
 } stm32_uart_cfg_t;
 
-const stm32_uart_cfg_t usart_cfg[6];
+extern stm32_uart_cfg_t usart_cfg[6];
 
 #define uart_set_baud( id, baud ) Chip_UART_SetBaud( usart_cfg[id].ptr, baud )
 #define uart_config_data( id, cfg ) Chip_UART_ConfigData( usart_cfg[id].ptr, cfg )

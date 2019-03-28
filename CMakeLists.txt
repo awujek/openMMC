@@ -88,6 +88,8 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES COMPILE_FLAGS ${MODULES_F
 
 if(${BOARD} MATCHES "^(afc)")
   set(PROJ_LIBS lpcopen)
+elseif(${BOARD} MATCHES "^(ertm14)")
+  set(PROJ_LIBS libstm)
 else()
   message(FATAL_ERROR "${BOARD} not supported!")
 endif()

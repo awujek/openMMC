@@ -116,6 +116,13 @@ add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
   COMMENT "Converting the AXF output to a binary file"
   )
 
+##Generate assembler file
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_OBJDUMP} -S -D ${CMAKE_PROJECT_NAME}.axf > ${CMAKE_PROJECT_NAME}.S
+  WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+  COMMENT "Genereate assembler file"
+  )
+
 #generate bootloader files only for afc cards
 if(${BOARD} MATCHES "^(afc)")
   add_executable(bootloader ${BOOT_SRCS})

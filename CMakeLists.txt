@@ -141,4 +141,11 @@ if(${BOARD} MATCHES "^(afc)")
     )
 endif()
 
-include( ${CMAKE_SOURCE_DIR}/probe/lpclink.cmake )
+if(${BOARD} MATCHES "^(afc)")
+  include( ${CMAKE_SOURCE_DIR}/probe/lpclink.cmake )
+elseif(${BOARD} MATCHES "^(ertm14)")
+  include( ${CMAKE_SOURCE_DIR}/probe/openocd.cmake )
+else()
+  message(WARNING "No probe support for ${BOARD}!")
+endif()
+

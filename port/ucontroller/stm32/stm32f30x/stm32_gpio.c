@@ -33,6 +33,25 @@ GPIO_TypeDef* gpio_addr[] = {
     [PORTD] = GPIOD
 };
 
+uint16_t pin_addr[] = {
+    [0] = GPIO_Pin_0,
+    [1] = GPIO_Pin_1,
+    [2] = GPIO_Pin_2,
+    [3] = GPIO_Pin_3,
+    [4] = GPIO_Pin_4,
+    [5] = GPIO_Pin_5,
+    [6] = GPIO_Pin_6,
+    [7] = GPIO_Pin_7,
+    [8] = GPIO_Pin_8,
+    [9] = GPIO_Pin_9,
+    [10] = GPIO_Pin_10,
+    [11] = GPIO_Pin_11,
+    [12] = GPIO_Pin_12,
+    [13] = GPIO_Pin_13,
+    [14] = GPIO_Pin_14,
+    [15] = GPIO_Pin_15
+};
+
 /**
  * @brief       Initialize GPIO block
  * @return      Nothing
@@ -61,15 +80,21 @@ void gpio_pin_toggle(uint8_t port, uint8_t pin)
  * @param       dir     : true (1) for OUTPUT, false (0) for INPUT
  */
 
-void gpio_set_pin_dir(uint8_t port, uint8_t pin, uint8_t func, uint8_t  dir)
+void gpio_set_pin_dir(uint8_t port, uint8_t pin, uint8_t dir)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
-    GPIO_TypeDef* stm_port;
 
-  //printf("stm32_gpio_configure port %p pin %08x\n", port, pin->pin );
+    /*printf("stm32_gpio_configure pin_id %d port %d (0x%x) pin %d (0x%x) mode %d pull %d\n\r",
+	   port,
+	   gpio_pins_def[port].port,
+	   STM_PORT(port),
+	   gpio_pins_def[port].pin,
+	   STM_PIN(port),
+	   gpio_pins_def[port].mode,
+	   gpio_pins_def[port].pupd);*/
 
-    GPIO_InitStructure.GPIO_Pin = pin; // that's  (PC0 on STM32)
-    GPIO_InitStructure.GPIO_Mode = dir;
-    GPIO_InitStructure.GPIO_PuPd = func;
-    GPIO_Init(gpio_addr[port], &GPIO_InitStructure);
+    GPIO_InitStructure.GPIO_Pin = STM_PIN(port);
+    GPIO_InitStructure.GPIO_Mode = gpio_pins_def[port].mode;
+    GPIO_InitStructure.GPIO_PuPd = gpio_pins_def[port].pupd;
+    GPIO_Init(STM_PORT(port), &GPIO_InitStructure);
 }

@@ -26,18 +26,25 @@
 #ifndef STM32_GPIO_H_
 #define STM32_GPIO_H_
 
-#define PORTS_MAX 5
+#define GPIO_LEVEL_HIGH Bit_SET
+#define GPIO_LEVEL_LOW  Bit_RESET
 
-GPIO_TypeDef* gpio_addr[PORTS_MAX];
+#define PORTS_MAX 5
+#define PINS_MAX 16
+
+extern GPIO_TypeDef* gpio_addr[PORTS_MAX];
+extern uint16_t pin_addr[PINS_MAX];
+
 
 struct pin_def {
-uint8_t port;
-uint8_t pin;
+uint16_t port;
+uint16_t pin;
 GPIOMode_TypeDef mode;
 GPIOPuPd_TypeDef pupd;
 };
 
-
+#define STM_PORT(xx) (gpio_addr[gpio_pins_def[xx].port])
+#define STM_PIN(xx)  (pin_addr[gpio_pins_def[xx].pin])
 /**
  * @brief       Initialize GPIO block
  * @return      Nothing
@@ -50,7 +57,7 @@ void gpio_init(void);
  * @param       pin     : GPIO pin to get state for
  * @return      true (1) if the GPIO is high, false (0) if low
  */
-#define gpio_read_pin( port, pin )             GPIO_ReadInputDataBit(gpio_addr[port], pin);
+#define gpio_read_pin( portx, pinx )             GPIO_ReadInputDataBit(STM_PORT(portx), STM_PIN(portx))
 
 /**
  * @brief       Set an individual GPIO output pin to the high state
@@ -58,7 +65,7 @@ void gpio_init(void);
  * @param       pin     : pin number
  * @note        This commands only applies for pins selected as outputs. Writing '0' shouldn't affect the pin state
  */
-#define gpio_set_pin_high( port, pin )          GPIO_WriteBit(gpio_addr[port], pin, 1)
+#define gpio_set_pin_high( portx, pinx )          GPIO_WriteBit(STM_PORT(portx), STM_PIN(portx), 1)
 
 /**
  * @brief       Set an individual GPIO output pin to the high state
@@ -66,7 +73,7 @@ void gpio_init(void);
  * @param       pin     : pin number
  * @note        This commands only applies for pins selected as outputs. Writing '0' shouldn't affect the pin state
  */
-#define gpio_set_pin_low( port, pin )          GPIO_WriteBit(gpio_addr[port], pin, 0)
+#define gpio_set_pin_low( portx, pinx )          GPIO_WriteBit(STM_PORT(portx), STM_PIN(portx), 0)
 
 /**
  * @brief       Toggle an individual GPIO output pin to the opposite state
@@ -74,7 +81,7 @@ void gpio_init(void);
  * @param       pin     : pin number
  * @note        This commands only applies for pins selected as outputs. Writing '0' shouldn't affect the pin state
  */
-void gpio_pin_toggle(uint8_t port, uint8_t pin);
+void gpio_pin_toggle(uint8_t portx, uint8_t pinx);
 
 /**
  * @brief       Set a GPIO pin to the specified state
@@ -82,7 +89,7 @@ void gpio_pin_toggle(uint8_t port, uint8_t pin);
  * @param       pin     : pin number
  * @param       state   : true (1) for high, false (0) for low
  */
-#define gpio_set_pin_state( port, pin, state ) GPIO_WriteBit(gpio_addr[port], pin, state)
+#define gpio_set_pin_state( portx, pinx, state ) GPIO_WriteBit(STM_PORT(portx), STM_PIN(portx), state)
 
 /**
  * @brief       Set a GPIO pin direction
@@ -90,7 +97,7 @@ void gpio_pin_toggle(uint8_t port, uint8_t pin);
  * @param       pin     : pin number
  * @param       dir     : true (1) for OUTPUT, false (0) for INPUT
  */
-void gpio_set_pin_dir(uint8_t port, uint8_t pin, uint8_t func, uint8_t dir);
+void gpio_set_pin_dir(uint8_t portx, uint8_t pinx, uint8_t dir);
 
 
 #endif

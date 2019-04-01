@@ -29,12 +29,12 @@
 
 #include "port.h"
 
-#define PIN_DEF( port, pin, func, dir ) ( (port << 24) | (pin << 16) | (func << 8) | dir )
+#define PIN_DEF( port, pin, func, dir ) (port)
 
-#define PIN_PORT( pin_def )      ((pin_def & 0xFF000000) >> 24)
-#define PIN_NUMBER( pin_def )    ((pin_def & 0x00FF0000) >> 16)
-#define PIN_FUNC( pin_def )      ((pin_def & 0x0000FF00) >> 8)
-#define PIN_DIR( pin_def )       ((pin_def & 0x000000FF) >> 0)
+#define PIN_PORT( x )      (x)
+#define PIN_NUMBER( x )    (11) /* dummy values */
+#define PIN_FUNC( x )      (12) /* dummy values */
+#define PIN_DIR( x )       (14) /* dummy values */
 
 #define NON_GPIO 0xFF
 
@@ -45,13 +45,5 @@
 #define PORTD 3
 #define PORTE 4
 #define PORTF 5
-
-/**
- * @brief       Sets I/O Control pin mux
- * @param       port    : GPIO port to mux
- * @param       pin     : GPIO pin to mux
- * @param       cfg     : Configuration bits to select pin mode/function
- */
-void pin_config(void *cfg);
 
 #endif

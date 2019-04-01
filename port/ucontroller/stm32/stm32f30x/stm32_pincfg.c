@@ -34,7 +34,6 @@
  * @param       pin     : GPIO pin to mux
  * @param       cfg     : Configuration bits to select pin mode/function
  */
-#define PIN_PORT( pin_def )      ((pin_def & 0xFF000000) >> 24)
 
 void enable_PeriphClock(int port)
 {
@@ -59,7 +58,7 @@ void pin_init( void )
 	
         if ( gpio_pins_def[i].mode != GPIO_Mode_AF ) {
             /* Config GPIO direction */
-            gpio_set_pin_dir( gpio_pins_def[i].port, gpio_pins_def[i].pin, gpio_pins_def[i].pupd, gpio_pins_def[i].mode);
+            gpio_set_pin_dir(i, 0, 0);
         }
     }
 }

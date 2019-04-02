@@ -80,3 +80,4 @@ set(UCONTROLLER_HDRS ${UCONTROLLER_HDRS} PARENT_SCOPE)
 add_library(libstm STATIC ${LIBSTM_SRCS})
 
 add_dependencies(libstm FreeRTOS)
+target_link_libraries(libstm PUBLIC FreeRTOS)

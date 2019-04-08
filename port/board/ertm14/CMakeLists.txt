@@ -10,6 +10,7 @@ endif()
 #List all modules used by this board
 set(TARGET_MODULES
   "UART_DEBUG"
+  "PAYLOAD"
   )
 
 set(BOARD_PATH ${CMAKE_CURRENT_SOURCE_DIR})
@@ -17,6 +18,11 @@ set(BOARD_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 #Include the modules sources
 set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/board_led.c)
 set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/pin_mapping.c)
+
+if (";${TARGET_MODULES};" MATCHES ";PAYLOAD;")
+  set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/payload.c)
+  set(MODULES_FLAGS "${MODULES_FLAGS} -DMODULE_PAYLOAD")
+endif()
 
 #Set the variables in the main scope
 set(TARGET_MODULES ${TARGET_MODULES} PARENT_SCOPE)

@@ -46,7 +46,30 @@ struct pin_def gpio_pins_def[GPIO_MAX] =
     [GPIO_LEDGREEN] = {PORTA, 12, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
     [GPIO_LEDRED]   = {PORTA, 11, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
     [GPIO_SYNC_LEDGREEN] = {PORTA, 10, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
-    [GPIO_SYNC_LEDRED]   = {PORTA, 9, GPIO_Mode_OUT, GPIO_PuPd_DOWN}
+    [GPIO_SYNC_LEDRED]   = {PORTA, 9, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+
+    [GPIO_P1V0_EN] =   { PORTB, 0,  GPIO_Mode_OUT, GPIO_PuPd_DOWN },
+    [GPIO_P1V0_PG] =   { PORTB, 1,  GPIO_Mode_IN,  GPIO_PuPd_DOWN },
+    [GPIO_P1V6_EN] =   { PORTB, 10, GPIO_Mode_OUT, GPIO_PuPd_DOWN },
+    [GPIO_P1V6_PG] =   { PORTB, 11, GPIO_Mode_IN,  GPIO_PuPd_DOWN },
+    [GPIO_P1V8_EN] =   { PORTC, 5,  GPIO_Mode_OUT, GPIO_PuPd_DOWN },
+    [GPIO_P1V8_PG] =   { PORTC, 8,  GPIO_Mode_IN,  GPIO_PuPd_DOWN },
+    [GPIO_P2V5_EN] =   { PORTB, 8,  GPIO_Mode_OUT, GPIO_PuPd_DOWN },
+    [GPIO_P2V5_PG] =   { PORTB, 9,  GPIO_Mode_IN,  GPIO_PuPd_DOWN },
+    [GPIO_P3V3_EN] =   { PORTB, 12, GPIO_Mode_OUT, GPIO_PuPd_DOWN },
+    [GPIO_P3V3_PG] =   { PORTB, 13, GPIO_Mode_IN,  GPIO_PuPd_DOWN },
+    [GPIO_P3V8_EN] =   { PORTA, 0,  GPIO_Mode_OUT, GPIO_PuPd_DOWN },
+    [GPIO_P3V8_PG] =   { PORTA, 1,  GPIO_Mode_IN,  GPIO_PuPd_DOWN },
+    [GPIO_PS_GTX_EN] = { PORTB, 14, GPIO_Mode_OUT, GPIO_PuPd_DOWN },
+    [GPIO_PS_GTX_PG] = { PORTB, 15, GPIO_Mode_IN,  GPIO_PuPd_DOWN },
+
+    [GPIO_FPGA_RESET]       = { PORTB, 5, GPIO_Mode_OUT, GPIO_PuPd_DOWN },
+    [GPIO_FPGA_CONFIG_DONE] = { PORTA, 2, GPIO_Mode_IN,  GPIO_PuPd_UP },
+    [GPIO_FPGA_CRC_ERROR]   = { PORTA, 3, GPIO_Mode_IN,  GPIO_PuPd_UP },
+
+    [GPIO_BP_PWR_ON]     = { PORTC, 6, GPIO_Mode_OUT, GPIO_PuPd_NOPULL },
+    /* Entry below should be up, but to allow running without crate make it down */
+    [GPIO_BP_ENABLE_N]   = { PORTC, 7, GPIO_Mode_IN,  GPIO_PuPd_DOWN   },
 
 };
 

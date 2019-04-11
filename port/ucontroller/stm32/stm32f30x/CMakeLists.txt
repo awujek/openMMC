@@ -4,9 +4,6 @@ set(SYS_INCPATH ${STM32F30X_PATH}/system/include)
 set(CMSIS_INCPATH ${STM32F30X_PATH}/system/include/cmsis)
 set(STDPERIPH_INCPATH ${STM32F30X_PATH}/system/include/stdperiph)
 
-include_directories(${STM32F30X_PATH})
-include_directories(${PROJ_HDRS})
-
 #Silence GCC Warnings
 add_compile_options( -Wno-switch -Wno-unused-but-set-variable )
 
@@ -55,11 +52,6 @@ set(LIBSTM_SRCS
   ${SYSLIB_SRCPATH}/stm32f30x_i2c.c
   )
 
-include_directories(${LPCOPEN_INCPATH})
-include_directories(${SYS_INCPATH})
-include_directories(${CMSIS_INCPATH})
-include_directories(${STDPERIPH_INCPATH})
-
 set(TARGET_MCU      "STM32F30X" )
 set(TARGET_CPU      "cortex-m4")
 
@@ -81,3 +73,7 @@ add_library(libstm STATIC ${LIBSTM_SRCS})
 
 add_dependencies(libstm FreeRTOS)
 target_link_libraries(libstm PUBLIC FreeRTOS)
+target_include_directories(libstm PUBLIC ${SYS_INCPATH})
+target_include_directories(libstm PUBLIC ${STM32F30X_PATH})
+target_include_directories(libstm PUBLIC ${CMSIS_INCPATH})
+target_include_directories(libstm PUBLIC ${STDPERIPH_INCPATH})

@@ -38,11 +38,15 @@
 #include "stm32f30x_rcc.h"
 #include "stm32f30x_gpio.h"
 #include "stm32f30x_usart.h"
+
 #include "stm32_pincfg.h"
 #include "stm32_gpio.h"
 #include "stm32_uart.h"
 #include "stm32_timer.h"
 
 #include "pin_mapping.h"
+#include "i2c_mapping.h"
+#include "stm32f30x_i2c_cpal.h"
+#include "stm32_i2c.h"
 
 #endif

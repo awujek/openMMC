@@ -371,13 +371,13 @@
 /* !!!! These following defines are available only when CPAL_I2C_MASTER_MODE is enabled !!!! */
 
 /* Enable the use of 10Bit Addressing Mode */
-#define CPAL_I2C_10BIT_ADDR_MODE
+/*#define CPAL_I2C_10BIT_ADDR_MODE*/
 
 /* Enable the use of Memory Addressing Mode */
 #define CPAL_I2C_MEM_ADDR
 
 /* Enable the use of 16Bit Address memory register option */
-#define CPAL_16BIT_REG_OPTION
+/*#define CPAL_16BIT_REG_OPTION*/
 
 
 /*------------------------------------------------------------------------------------------------------------------------------*/
@@ -413,14 +413,14 @@
 /* Transfer UserCallbacks : To use a Transfer callback comment the relative define */
 #define CPAL_I2C_TX_UserCallback        (void)
 #define CPAL_I2C_RX_UserCallback        (void)
-#define CPAL_I2C_TXTC_UserCallback      (void)
-#define CPAL_I2C_RXTC_UserCallback      (void)
+//#define CPAL_I2C_TXTC_UserCallback      (void)
+//#define CPAL_I2C_RXTC_UserCallback      (void)
 
 /* DMA Transfer UserCallbacks : To use a DMA Transfer UserCallbacks comment the relative define */
-#define CPAL_I2C_DMATXTC_UserCallback   (void)
+//#define CPAL_I2C_DMATXTC_UserCallback   (void)
 #define CPAL_I2C_DMATXHT_UserCallback   (void)
 #define CPAL_I2C_DMATXTE_UserCallback   (void)
-#define CPAL_I2C_DMARXTC_UserCallback   (void)
+//#define CPAL_I2C_DMARXTC_UserCallback   (void)
 #define CPAL_I2C_DMARXHT_UserCallback   (void)
 #define CPAL_I2C_DMARXTE_UserCallback   (void)
 

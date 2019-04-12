@@ -219,8 +219,8 @@ g_pfnVectors:
 	.word	0
 	.word	0
 	.word	0
-	.word	0
-	.word	0
+	.word	I2C3_EV_IRQHandler
+	.word	I2C3_ER_IRQHandler
 	.word	USB_HP_IRQHandler
 	.word	USB_LP_IRQHandler
 	.word	USBWakeUp_RMP_IRQHandler
@@ -450,7 +450,13 @@ g_pfnVectors:
 	
 	.weak	COMP7_IRQHandler
 	.thumb_set COMP7_IRQHandler,Default_Handler	
-	
+
+	.weak	I2C3_EV_IRQHandler
+	.thumb_set I2C3_EV_IRQHandler,Default_Handler
+
+	.weak	I2C3_ER_IRQHandler
+	.thumb_set I2C3_ER_IRQHandler,Default_Handler
+
 	.weak	USB_HP_IRQHandler
 	.thumb_set USB_HP_IRQHandler,Default_Handler
 	

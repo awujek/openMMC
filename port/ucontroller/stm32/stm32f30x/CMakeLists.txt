@@ -3,6 +3,8 @@ set(SYSLIB_SRCPATH ${STM32F30X_PATH}/system/lib)
 set(SYS_INCPATH ${STM32F30X_PATH}/system/include)
 set(CMSIS_INCPATH ${STM32F30X_PATH}/system/include/cmsis)
 set(STDPERIPH_INCPATH ${STM32F30X_PATH}/system/include/stdperiph)
+set(CPALLIB_SRCPATH ${STM32F30X_PATH}/STM32F30x_I2C_CPAL_Driver/src)
+set(CPALLIB_INCPATH ${STM32F30X_PATH}/STM32F30x_I2C_CPAL_Driver/inc)
 
 #Silence GCC Warnings
 add_compile_options( -Wno-switch -Wno-unused-but-set-variable )
@@ -52,7 +54,13 @@ set(LIBSTM_SRCS
   ${SYSLIB_SRCPATH}/stm32f30x_i2c.c
   )
 
-set(TARGET_MCU      "STM32F30X" )
+set(LIBCPAL_SRCS
+  ${CPALLIB_SRCPATH}/stm32f30x_i2c_cpal.c
+  ${CPALLIB_SRCPATH}/stm32f30x_i2c_cpal_hal.c
+  ${CPALLIB_SRCPATH}/stm32f30x_i2c_cpal_usercallback.c
+  )
+
+set(TARGET_MCU      "STM32F303xE" )
 set(TARGET_CPU      "cortex-m4")
 
 set(STM32F30X_FLAGS ${STM32F30X_FLAGS} -mcpu=${TARGET_CPU} -mtune=${TARGET_CPU})
@@ -77,3 +85,11 @@ target_include_directories(libstm PUBLIC ${SYS_INCPATH})
 target_include_directories(libstm PUBLIC ${STM32F30X_PATH})
 target_include_directories(libstm PUBLIC ${CMSIS_INCPATH})
 target_include_directories(libstm PUBLIC ${STDPERIPH_INCPATH})
+
+add_library(libcpal STATIC ${LIBCPAL_SRCS})
+add_dependencies(libstm libcpal)
+target_include_directories(libcpal PUBLIC ${CPALLIB_INCPATH})
+target_include_directories(libcpal PUBLIC ${SYS_INCPATH})
+target_include_directories(libcpal PUBLIC ${STM32F30X_PATH})
+target_include_directories(libcpal PUBLIC ${CMSIS_INCPATH})
+target_include_directories(libcpal PUBLIC ${STDPERIPH_INCPATH})

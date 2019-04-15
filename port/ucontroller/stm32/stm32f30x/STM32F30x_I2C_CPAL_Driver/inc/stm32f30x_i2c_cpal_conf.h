@@ -499,13 +499,18 @@
 /* #define CPAL_NVIC_PRIOGROUP      NVIC_PriorityGroup_1 */ /*!< 1 bits for preemption priority
                                                                        3 bits for subpriority */
 
-#define CPAL_NVIC_PRIOGROUP      NVIC_PriorityGroup_2  /*!< 2 bits for preemption priority
+/* #define CPAL_NVIC_PRIOGROUP      NVIC_PriorityGroup_2 */ /*!< 2 bits for preemption priority
                                                                        2 bits for subpriority */
 
 /* #define CPAL_NVIC_PRIOGROUP       NVIC_PriorityGroup_3 */ /*!< 3 bits for preemption priority
                                                                        1 bits for subpriority */
-
-/* #define CPAL_NVIC_PRIOGROUP       NVIC_PriorityGroup_4 */ /*!< 4 bits for preemption priority */
+/* FreeRTOS requires this setting
+ * Most systems default to the wanted configuration, with the noticeable exception of the STM32 driver library. If you are
+ * using an STM32 with the STM32 driver library then ensure all the priority bits are assigned to be preempt priority bits
+ * by calling NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 ); before the RTOS is started.
+ * https://www.freertos.org/RTOS-Cortex-M3-M4.html
+*/
+#define CPAL_NVIC_PRIOGROUP       NVIC_PriorityGroup_4 /*!< 4 bits for preemption priority */
 
 /*-----------Interrupt Priority Offset-------------*/
 
@@ -515,13 +520,13 @@
    I2Cx Interrupt Priority are defined in stm32f30x_i2c_cpal_hal.h file in Section 3 */
 
 #define I2C1_IT_OFFSET_SUBPRIO          0      /* I2C1 SUB-PRIORITY Offset */
-#define I2C1_IT_OFFSET_PREPRIO          0      /* I2C1 PREEMPTION PRIORITY Offset */
+#define I2C1_IT_OFFSET_PREPRIO          3      /* I2C1 PREEMPTION PRIORITY Offset */
 
 #define I2C2_IT_OFFSET_SUBPRIO          0      /* I2C2 SUB-PRIORITY Offset */
-#define I2C2_IT_OFFSET_PREPRIO          0      /* I2C2 PREEMPTION PRIORITY Offset */
+#define I2C2_IT_OFFSET_PREPRIO          3      /* I2C2 PREEMPTION PRIORITY Offset */
 
 #define I2C3_IT_OFFSET_SUBPRIO          0      /* I2C3 SUB-PRIORITY Offset */
-#define I2C3_IT_OFFSET_PREPRIO          0      /* I2C3 PREEMPTION PRIORITY Offset */
+#define I2C3_IT_OFFSET_PREPRIO          3      /* I2C3 PREEMPTION PRIORITY Offset */
 
 /*-----------------------------------------------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------------------------------------------*/

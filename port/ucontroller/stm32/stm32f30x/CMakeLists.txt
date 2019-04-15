@@ -10,6 +10,7 @@ set(CPALLIB_INCPATH ${STM32F30X_PATH}/STM32F30x_I2C_CPAL_Driver/inc)
 add_compile_options( -Wno-switch -Wno-unused-but-set-variable )
 
 set(UCONTROLLER_SRCS
+   ${STM32F30X_PATH}/stm32_assert.c
    ${STM32F30X_PATH}/stm32_pincfg.c
    ${STM32F30X_PATH}/stm32_uart.c
    ${STM32F30X_PATH}/stm32_gpio.c

@@ -79,8 +79,8 @@ licensing and training services.
 #define configAPPLICATION_ALLOCATED_HEAP        1
 #define configSUPPORT_DYNAMIC_ALLOCATION        1
 
-void vAssertCalled( char* file, uint32_t line);
-#define configASSERT( x )     if( ( x ) == 0 ) { vAssertCalled( __FILE__, __LINE__ );}
+void stm32_vAssertCalled( char* file, uint32_t line, const char *func);
+#define configASSERT( x )     if( ( x ) == 0 ) { stm32_vAssertCalled( __FILE__, __LINE__, __func__ );}
 
 #if (configGENERATE_RUN_TIME_STATS == 1)
 #include "chip_lpc175x_6x.h"
@@ -106,7 +106,7 @@ extern void vConfigureTimerForRunTimeStats( void );
 #ifdef __NVIC_PRIO_BITS
 #define configPRIO_BITS       __NVIC_PRIO_BITS
 #else
-#define configPRIO_BITS                         4   /* 32 priority levels */
+#define configPRIO_BITS                         4   /* 15 priority levels */
 #endif
 
 /* The lowest priority. */

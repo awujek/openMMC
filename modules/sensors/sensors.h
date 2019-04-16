@@ -52,4 +52,8 @@
 #include "max6642.h"
 #endif
 
+#ifdef MODULE_TMP100
+#include "tmp100.h"
+#endif
+
 #endif

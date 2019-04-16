@@ -18,6 +18,7 @@ set(BOARD_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 #Include the modules sources
 set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/board_led.c)
 set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/pin_mapping.c)
+set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/i2c_mapping.c)
 
 if (";${TARGET_MODULES};" MATCHES ";PAYLOAD;")
   set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/payload.c)

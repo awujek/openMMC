@@ -11,6 +11,9 @@ endif()
 set(TARGET_MODULES
   "UART_DEBUG"
   "PAYLOAD"
+  "SDR"
+  "SENSOR"
+  "TMP100"
   )
 
 set(BOARD_PATH ${CMAKE_CURRENT_SOURCE_DIR})
@@ -19,6 +22,7 @@ set(BOARD_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/board_led.c)
 set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/pin_mapping.c)
 set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/i2c_mapping.c)
+set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/sdr_list.c)
 
 if (";${TARGET_MODULES};" MATCHES ";PAYLOAD;")
   set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/payload.c)

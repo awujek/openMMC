@@ -417,10 +417,10 @@
 //#define CPAL_I2C_RXTC_UserCallback      (void)
 
 /* DMA Transfer UserCallbacks : To use a DMA Transfer UserCallbacks comment the relative define */
-//#define CPAL_I2C_DMATXTC_UserCallback   (void)
+#define CPAL_I2C_DMATXTC_UserCallback   (void)
 #define CPAL_I2C_DMATXHT_UserCallback   (void)
 #define CPAL_I2C_DMATXTE_UserCallback   (void)
-//#define CPAL_I2C_DMARXTC_UserCallback   (void)
+#define CPAL_I2C_DMARXTC_UserCallback   (void)
 #define CPAL_I2C_DMARXHT_UserCallback   (void)
 #define CPAL_I2C_DMARXTE_UserCallback   (void)
 

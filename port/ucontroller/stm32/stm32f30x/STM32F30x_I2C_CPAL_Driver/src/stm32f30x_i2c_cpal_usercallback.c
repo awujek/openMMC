@@ -27,17 +27,10 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f30x_i2c_cpal.h"
-#include <stdio.h>
+
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-extern __IO uint32_t RX_done;
-extern __IO uint32_t TX_done;
-extern __IO uint32_t RX_cint;
-extern __IO uint32_t TX_cint;
-extern __IO uint32_t RX_cdma;
-extern __IO uint32_t TX_cdma;
-
 /* Private macro -------------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -59,23 +52,22 @@ extern __IO uint32_t TX_cdma;
   */
 uint32_t CPAL_TIMEOUT_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
 {
-  printf("Timemout\r\n");
   return CPAL_PASS;
 }
 
 
 /*=========== Transfer UserCallback ===========*/
 
+
 /**
   * @brief  Manages the End of Tx transfer event
   * @param  pDevInitStruct 
   * @retval None
   */
-void CPAL_I2C_TXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
+/*void CPAL_I2C_TXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
 {
-    TX_cint++;
-    TX_done = 1;
-}
+
+}*/
 
 
 /**
@@ -83,11 +75,10 @@ void CPAL_I2C_TXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
   * @param  pDevInitStruct
   * @retval None
   */
-void CPAL_I2C_RXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
+/*void CPAL_I2C_RXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
 {
-    RX_cint++;
-    RX_done = 1;
-}
+
+}*/
 
 
 /**
@@ -117,11 +108,10 @@ void CPAL_I2C_RXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
   * @param  pDevInitStruct
   * @retval None
   */
-void CPAL_I2C_DMATXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
+/*void CPAL_I2C_DMATXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
 {
-    TX_cdma++;
-    TX_done = 2;
-}
+
+}*/
 
 
 /**
@@ -151,11 +141,10 @@ void CPAL_I2C_DMATXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
   * @param  pDevInitStruct
   * @retval None
   */
-void CPAL_I2C_DMARXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
+/*void CPAL_I2C_DMARXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
 {
-    RX_cdma++;
-    RX_done = 2;
-}
+
+}*/
 
 
 /**

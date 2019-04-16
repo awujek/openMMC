@@ -71,5 +71,9 @@ struct pin_def gpio_pins_def[GPIO_MAX] =
     /* Entry below should be up, but to allow running without crate make it down */
     [GPIO_BP_ENABLE_N]   = { PORTC, 7, GPIO_Mode_IN,  GPIO_PuPd_DOWN   },
 
+     /* For GPIO_GA* pull direction is overwriten in get_ipmb_addr() */
+    [GPIO_GA0]  = { PORTC, 13, GPIO_Mode_IN,  GPIO_PuPd_NOPULL   },
+    [GPIO_GA1]  = { PORTC, 14, GPIO_Mode_IN,  GPIO_PuPd_NOPULL   },
+    [GPIO_GA2]  = { PORTC, 15, GPIO_Mode_IN,  GPIO_PuPd_NOPULL   },
 };
 

@@ -64,6 +64,9 @@ enum pin_enum {
     GPIO_FPGA_CRC_ERROR,
     GPIO_BP_PWR_ON,
     GPIO_BP_ENABLE_N,
+    GPIO_GA0,
+    GPIO_GA1,
+    GPIO_GA2,
     GPIO_MAX
 };
 

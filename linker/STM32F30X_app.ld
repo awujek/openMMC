@@ -72,7 +72,13 @@ SECTIONS
     . = ALIGN(4);
     _etext = .;        /* define a global symbols at end of code */
   } >FLASH
-
+  
+  .ipmi_handlers : ALIGN(32)
+  {
+    _ipmi_handlers = .;
+    KEEP(*(.ipmi_handlers))
+    _eipmi_handlers = .;
+  } > FLASH
   /* Constant data goes into FLASH */
   .rodata :
   {

@@ -293,6 +293,16 @@ static void SetSysClock(void)
 /*            PLL (clocked by HSE) used as System clock source                */
 /******************************************************************************/
 
+
+  /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   * !!!!!!!!!!!!!!!!!!!!!DO NOT ENABLE HSE!!!!!!!!!!!!!!!!!!!
+   * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   * Pins which can be used for HSE are used by I2C2!
+   */
+  return ;
+
+
+
   /* SYSCLK, HCLK, PCLK2 and PCLK1 configuration -----------*/
   /* Enable HSE */
   RCC->CR |= ((uint32_t)RCC_CR_HSEON);

@@ -14,6 +14,8 @@ set(TARGET_MODULES
   "SDR"
   "SENSOR"
   "TMP100"
+  "EEPROM_24AA025E48"
+  "FRU"
   )
 
 set(BOARD_PATH ${CMAKE_CURRENT_SOURCE_DIR})
@@ -28,6 +30,18 @@ set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/sdr_list.c)
 if (";${TARGET_MODULES};" MATCHES ";PAYLOAD;")
   set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/payload.c)
   set(MODULES_FLAGS "${MODULES_FLAGS} -DMODULE_PAYLOAD")
+endif()
+
+if (";${TARGET_MODULES};" MATCHES ";FRU;")
+  set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/board_fru.c)
+  set(MODULES_FLAGS "${MODULES_FLAGS} -DMODULE_FRU")
+endif()
+
+#Extra definitions
+if (FRU_WRITE_EEPROM)
+  message(STATUS "FRU EEPROM will be written if no valid data is found!")
+  set(MODULES_FLAGS "${MODULES_FLAGS} -DFRU_WRITE_EEPROM")
+  set(FRU_WRITE_EEPROM false CACHE BOOL "Set this flag to enable writing the board ID on the EEPROM" FORCE)
 endif()
 
 #Set the variables in the main scope

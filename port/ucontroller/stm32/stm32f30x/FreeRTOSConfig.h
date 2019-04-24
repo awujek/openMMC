@@ -101,6 +101,7 @@ extern void vConfigureTimerForRunTimeStats( void );
 #define INCLUDE_vTaskDelay                      1
 #define INCLUDE_uxTaskGetStackHighWaterMark     1
 #define INCLUDE_xTaskGetCurrentTaskHandle       1
+#define INCLUDE_xTaskGetSchedulerState          1
 
 /* Use the system definition, if there is one */
 #ifdef __NVIC_PRIO_BITS

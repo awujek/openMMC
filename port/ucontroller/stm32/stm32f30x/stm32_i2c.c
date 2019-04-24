@@ -55,11 +55,26 @@ static SemaphoreHandle_t i2c_acc_mutex[I2C_NUM_INTERFACE];
  * performance reasons. However, performance is not critical here. */
 static TaskHandle_t i2c_xTaskToNotify[I2C_NUM_INTERFACE];
 
+__IO uint8_t i2c_isr_poll_done = 0;
+
+
 #define MAX_BUFF_SIZE           200
 uint8_t tTxBuffer[MAX_BUFF_SIZE];
 uint8_t tRxBuffer[MAX_BUFF_SIZE];
 
 CPAL_TransferTypeDef  sRxStructure[I2C_NUM_INTERFACE], sTxStructure[I2C_NUM_INTERFACE];
+
+void CPAL_I2C_TC_UserCallback_poll(CPAL_InitTypeDef* pDevInitStruct);
+void cpal_write_spinlock(I2C_ID_T id);
+void cpal_read_spinlock(I2C_ID_T id);
+
+/* Pointer to a function handling IRQ. Firstly initialized with a poll version.
+ * Before Scheduler is running, there is not task context. So it is not
+ * possible to unblock code waiting on semaphore. */
+void (* CPAL_I2C_TC_UserCallback_func)(CPAL_InitTypeDef* pDevInitStruct) = CPAL_I2C_TC_UserCallback_poll;
+
+void (* cpal_write_func)(I2C_ID_T id) = cpal_write_spinlock;
+void (* cpal_read_func)(I2C_ID_T id) = cpal_read_spinlock;
 
 void CPAL_I2C_TC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
 {
@@ -97,6 +112,11 @@ void CPAL_I2C_TC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
     portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
 }
 
+void CPAL_I2C_TC_UserCallback_poll(CPAL_InitTypeDef* pDevInitStruct)
+{
+    i2c_isr_poll_done = 1;
+}
+
 /**
   * @brief  Manages the End of Tx transfer event
   * @param  pDevInitStruct
@@ -105,7 +125,7 @@ void CPAL_I2C_TC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
 void CPAL_I2C_TXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
 {
     TX_cint++;
-    CPAL_I2C_TC_UserCallback(pDevInitStruct);
+    (*CPAL_I2C_TC_UserCallback_func)(pDevInitStruct);
 }
 
 /**
@@ -116,7 +136,7 @@ void CPAL_I2C_TXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
 void CPAL_I2C_RXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
 {
     RX_cint++;
-    CPAL_I2C_TC_UserCallback(pDevInitStruct);
+    (*CPAL_I2C_TC_UserCallback_func)(pDevInitStruct);
 }
 
 void cpal_read(I2C_ID_T id)
@@ -171,6 +191,58 @@ void cpal_write(I2C_ID_T id)
     }
 }
 
+
+/* Before scheduler (function vTaskStartScheduler()) is running the main init
+ * code is running outside a task. By this it is not possible to wake it
+ * with vTaskNotify*() nor xSemaphoreGive() from the ISR. Instead use
+ * i2c_isr_poll_done variable for notification.  */
+void cpal_write_spinlock(I2C_ID_T id)
+{
+    if (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING) {
+
+	i2c_isr_poll_done = 0;
+	if (CPAL_I2C_Write(I2C_DevStructure[id]) == CPAL_PASS) {
+	}
+
+	while(!i2c_isr_poll_done) {
+	    /* Spin until transmission is done */
+	}
+
+	return;
+    } else {
+	/* Scheduler is already running, so use normal functions. */
+	cpal_write_func = cpal_write;
+	CPAL_I2C_TC_UserCallback_func = CPAL_I2C_TC_UserCallback;
+	(*cpal_write_func)(id);
+    }
+}
+
+/* Before scheduler (function vTaskStartScheduler()) is running the main init
+ * code is running outside a task. By this it is not possible to wake it
+ * with vTaskNotify*() nor xSemaphoreGive() from the ISR. Instead use
+ * i2c_isr_poll_done variable for notification.  */
+void cpal_read_spinlock(I2C_ID_T id)
+{
+    if (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING) {
+
+	i2c_isr_poll_done = 0;
+	if (CPAL_I2C_Read(I2C_DevStructure[id]) == CPAL_PASS) {
+	}
+
+	while(!i2c_isr_poll_done) {
+	    /* Spin until transmission is done */
+	}
+
+	return;
+    } else {
+	/* Scheduler is already running, so use normal functions. */
+	cpal_read_func = cpal_read;
+	CPAL_I2C_TC_UserCallback_func = CPAL_I2C_TC_UserCallback;
+	(*cpal_read_func)(id);
+    }
+}
+
+
 int xI2CMasterWrite(I2C_ID_T id, uint8_t addr, uint8_t *tx_buff, uint8_t tx_len)
 {
     int ret;
@@ -181,7 +253,7 @@ int xI2CMasterWrite(I2C_ID_T id, uint8_t addr, uint8_t *tx_buff, uint8_t tx_len)
     sTxStructure[id].wAddr2 = 0;
     sTxStructure[id].wNumData = tx_len;
     sTxStructure[id].pbBuffer = tx_buff;
-    cpal_write(id);
+    (*cpal_write_func)(id);
 
     ret = tx_len - sTxStructure[id].wNumData;
     xSemaphoreGive(i2c_acc_mutex[id]);
@@ -199,7 +271,7 @@ int xI2CMasterRead(I2C_ID_T id, uint8_t addr, uint8_t *rx_buff, uint8_t rx_len)
     sRxStructure[id].wAddr2 = 0;
     sRxStructure[id].wNumData = rx_len;
     sRxStructure[id].pbBuffer = rx_buff;
-    cpal_read(id);
+    (*cpal_read_func)(id);
 
     ret = rx_len - sRxStructure[id].wNumData;
     xSemaphoreGive(i2c_acc_mutex[id]);
@@ -218,7 +290,7 @@ int xI2CMasterWriteRead(I2C_ID_T id, uint8_t addr, uint8_t cmd, uint8_t *rx_buff
     sRxStructure[id].wAddr2 = cmd;
     sRxStructure[id].wNumData = rx_len;
     sRxStructure[id].pbBuffer = rx_buff;
-    cpal_read(id);
+    (*cpal_read_func)(id);
     ret = rx_len - sRxStructure[id].wNumData;
 
     xSemaphoreGive(i2c_acc_mutex[id]);

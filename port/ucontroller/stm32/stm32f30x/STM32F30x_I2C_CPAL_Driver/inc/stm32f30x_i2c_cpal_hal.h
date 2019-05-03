@@ -157,14 +157,14 @@ extern "C" {
 #ifdef CPAL_I2C2_SUPPORTED
   #define CPAL_I2C2_SCL_GPIO_PORT         GPIOF
   #define CPAL_I2C2_SCL_GPIO_CLK          RCC_AHBPeriph_GPIOF
-  #define CPAL_I2C2_SCL_GPIO_PIN          GPIO_Pin_6
-  #define CPAL_I2C2_SCL_GPIO_PINSOURCE    GPIO_PinSource6
+  #define CPAL_I2C2_SCL_GPIO_PIN          GPIO_Pin_1
+  #define CPAL_I2C2_SCL_GPIO_PINSOURCE    GPIO_PinSource1
   #define CPAL_I2C2_SCL_GPIO_AF           GPIO_AF_4
 
-  #define CPAL_I2C2_SDA_GPIO_PORT         GPIOA
+  #define CPAL_I2C2_SDA_GPIO_PORT         GPIOF
   #define CPAL_I2C2_SDA_GPIO_CLK          RCC_AHBPeriph_GPIOA
-  #define CPAL_I2C2_SDA_GPIO_PIN          GPIO_Pin_10
-  #define CPAL_I2C2_SDA_GPIO_PINSOURCE    GPIO_PinSource10
+  #define CPAL_I2C2_SDA_GPIO_PIN          GPIO_Pin_0
+  #define CPAL_I2C2_SDA_GPIO_PINSOURCE    GPIO_PinSource0
   #define CPAL_I2C2_SDA_GPIO_AF           GPIO_AF_4
 #endif /* CPAL_I2C2_SUPPORTED */
 

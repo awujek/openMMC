@@ -106,7 +106,7 @@ if(${TARGET_BOARD_NAME} MATCHES "^(AFC)")
   endif()
 endif()
 
-if(NOT (${TARGET_BOARD_NAME} MATCHES "^(eRTM14)"))
+if(NOT (${TARGET_BOARD_NAME} MATCHES "^(eRTM1[45])"))
   if(NOT ("${MODULES_FLAGS}" MATCHES "-DMODULE_HOTSWAP"))
     message(FATAL_ERROR "${Red}[ERROR] Mandatory Hotswap sensor module not included!${ColourReset}")
   endif()

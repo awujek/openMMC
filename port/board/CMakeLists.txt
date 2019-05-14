@@ -20,8 +20,8 @@ if(${BOARD} MATCHES "^(afc-bpm)$")
 elseif(${BOARD} MATCHES "^(afc-timing)$" )
   add_subdirectory(afc-timing)
 
-elseif(${BOARD} MATCHES "^(ertm14)$" )
-  add_subdirectory(ertm14)
+elseif(${BOARD} MATCHES "^(ertm1[45])$" )
+  add_subdirectory(${BOARD})
 
 else()
   message(FATAL_ERROR "${BoldRed}Selected board \"${BOARD}\" is not implemented!${ColourReset}")

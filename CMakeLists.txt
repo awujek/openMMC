@@ -88,7 +88,7 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES COMPILE_FLAGS ${MODULES_F
 
 if(${BOARD} MATCHES "^(afc)")
   set(PROJ_LIBS lpcopen)
-elseif(${BOARD} MATCHES "^(ertm14)")
+elseif(${BOARD} MATCHES "^(ertm1[45])")
   set(PROJ_LIBS libcpal libstm)
 else()
   message(FATAL_ERROR "${BOARD} not supported!")
@@ -143,7 +143,7 @@ endif()
 
 if(${BOARD} MATCHES "^(afc)")
   include( ${CMAKE_SOURCE_DIR}/probe/lpclink.cmake )
-elseif(${BOARD} MATCHES "^(ertm14)")
+elseif(${BOARD} MATCHES "^(ertm1[45])")
   include( ${CMAKE_SOURCE_DIR}/probe/openocd.cmake )
 else()
   message(WARNING "No probe support for ${BOARD}!")

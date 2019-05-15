@@ -26,8 +26,8 @@
 #include "board_led.h"
 
 const uint32_t led_pincfg[] = {
-    [LED0] = GPIO_LEDRED,
-    [LED1] = GPIO_LEDGREEN
+    [LED0] = GPIO_POWER_LEDRED,
+    [LED1] = GPIO_POWER_LEDGREEN
 };
 
 const LEDConfig_t leds_config[] = {

@@ -20,16 +20,10 @@
  *   @license GPL-3.0+ <http://spdx.org/licenses/GPL-3.0+>
  */
 
-/**
- * @file afc/v3_1/payload.h
- * @brief Payload control module definitions for AFCv3.1
- *
- * @ingroup AFC_V3_1_PAYLOAD
- */
 
 /**
- * @defgroup AFC_V3_1_PAYLOAD AFCv3.1 Payload Control
- * @ingroup AFC_V3_1
+ * @defgroup ERTM15_PAYLOAD eRTM15 Payload Control
+ * @ingroup ERTM15
  * @{
  */
 
@@ -52,8 +46,8 @@ enum {
 } payload_state;
 
 /**
- * @defgroup AFC_V3_1_PAYLOAD_MSG Payload Messages Codes
- * @ingroup AFC_V3_1_PAYLOAD
+ * @defgroup ERTM15_PAYLOAD_MSG Payload Messages Codes
+ * @ingroup ERTM15_PAYLOAD
  * @{
  */
 #define PAYLOAD_MESSAGE_COLD_RST        (1 << 0)
@@ -95,17 +89,6 @@ void vTaskPayload( void *pvParameters );
  * @brief Creates Payload Control task and initializes the board's needed hardware
  */
 void payload_init( void );
-
-#ifdef MODULE_HPM
-
-#define PAYLOAD_HPM_PAGE_SIZE    256
-
-uint8_t payload_hpm_prepare_comp( void );
-uint8_t payload_hpm_upload_block( uint8_t * block, uint16_t size );
-uint8_t payload_hpm_finish_upload( uint32_t image_size );
-uint8_t payload_hpm_get_upgrade_status( void );
-uint8_t payload_hpm_activate_firmware( void );
-#endif
 
 #endif /* IPMI_PAYLOAD_H_ */
 

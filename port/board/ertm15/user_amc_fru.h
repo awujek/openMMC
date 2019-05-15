@@ -33,16 +33,16 @@
  *********************************************/
 #define AMC_BOARD_MANUFACTURING_TIME 10463040               /* Amount of minutes since 0:00 1/1/96 */
 #define AMC_BOARD_MANUFACTURER      "CERN"
-#define AMC_BOARD_NAME              "eRTM14"
+#define AMC_BOARD_NAME              "eRTM15"
 #define AMC_BOARD_SN                "CNxxxxx"
-#define AMC_BOARD_PN                "eRTM14"
+#define AMC_BOARD_PN                "eRTM15"
 
 /*********************************************
  * Product information area
  *********************************************/
 #define AMC_PRODUCT_MANUFACTURER    "CERN"
-#define AMC_PRODUCT_NAME            "eRTM14"
-#define AMC_PRODUCT_PN              "eRTM14:1.0"
+#define AMC_PRODUCT_NAME            "eRTM15"
+#define AMC_PRODUCT_PN              "eRTM15:1.0"
 #define AMC_PRODUCT_VERSION         "1.0"
 #define AMC_PRODUCT_SN              "CNxxxxx"
 #define AMC_PRODUCT_ASSET_TAG       "Generic FRU"

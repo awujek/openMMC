@@ -20,20 +20,20 @@
  */
 
 /**
- * @defgroup ERTM14 eRTM14 Board Port
+ * @defgroup ERTM15 eRTM15 Board Port
  * @ingroup BOARD_PORTS
  */
 
 /**
- * @file ertm14/pin_mapping.h
- * @brief Hardware pin definitions for eRTM14
+ * @file ertm15/pin_mapping.h
+ * @brief Hardware pin definitions for eRTM15
  *
- * @ingroup ERTM14_PIN_MAPPING
+ * @ingroup ERTM15_PIN_MAPPING
  */
 
 /**
- * @defgroup ERTM14_PIN_MAPPING eRTM14 Pin Mapping
- * @ingroup ERTM14
+ * @defgroup ERTM15_PIN_MAPPING eRTM15 Pin Mapping
+ * @ingroup ERTM15
  * @{
  */
 
@@ -43,37 +43,42 @@
 
 struct pin_def gpio_pins_def[GPIO_MAX] = 
 {
-    [GPIO_LEDGREEN] = {PORTA, 12, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
-    [GPIO_LEDRED]   = {PORTA, 11, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
-    [GPIO_SYNC_LEDGREEN] = {PORTA, 10, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
-    [GPIO_SYNC_LEDRED]   = {PORTA, 9, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+    [GPIO_LEDS_UCLK]         = {PORTB,  0, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+    [GPIO_LEDS_SCLK]         = {PORTB,  1, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+    [GPIO_LEDS_SER]          = {PORTB,  2, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
 
-    [GPIO_P1V0_EN] =   { PORTB, 0,  GPIO_Mode_OUT, GPIO_PuPd_DOWN },
-    [GPIO_P1V0_PG] =   { PORTB, 1,  GPIO_Mode_IN,  GPIO_PuPd_DOWN },
-    [GPIO_P1V6_EN] =   { PORTB, 10, GPIO_Mode_OUT, GPIO_PuPd_DOWN },
-    [GPIO_P1V6_PG] =   { PORTB, 11, GPIO_Mode_IN,  GPIO_PuPd_DOWN },
-    [GPIO_P1V8_EN] =   { PORTC, 5,  GPIO_Mode_OUT, GPIO_PuPd_DOWN },
-    [GPIO_P1V8_PG] =   { PORTC, 8,  GPIO_Mode_IN,  GPIO_PuPd_DOWN },
-    [GPIO_P2V5_EN] =   { PORTB, 8,  GPIO_Mode_OUT, GPIO_PuPd_DOWN },
-    [GPIO_P2V5_PG] =   { PORTB, 9,  GPIO_Mode_IN,  GPIO_PuPd_DOWN },
-    [GPIO_P3V3_EN] =   { PORTB, 12, GPIO_Mode_OUT, GPIO_PuPd_DOWN },
-    [GPIO_P3V3_PG] =   { PORTB, 13, GPIO_Mode_IN,  GPIO_PuPd_DOWN },
-    [GPIO_P3V8_EN] =   { PORTA, 0,  GPIO_Mode_OUT, GPIO_PuPd_DOWN },
-    [GPIO_P3V8_PG] =   { PORTA, 1,  GPIO_Mode_IN,  GPIO_PuPd_DOWN },
-    [GPIO_PS_GTX_EN] = { PORTB, 14, GPIO_Mode_OUT, GPIO_PuPd_DOWN },
-    [GPIO_PS_GTX_PG] = { PORTB, 15, GPIO_Mode_IN,  GPIO_PuPd_DOWN },
+    [GPIO_P1V8_PG]           = {PORTB, 13, GPIO_Mode_IN,  GPIO_PuPd_DOWN},
+    [GPIO_P3V3_PG]           = {PORTB, 15, GPIO_Mode_IN,  GPIO_PuPd_DOWN},
+    [GPIO_P3V3_PLL_PG]       = {PORTB, 12, GPIO_Mode_IN,  GPIO_PuPd_DOWN},
+    [GPIO_P3V6_PG]           = {PORTB, 11, GPIO_Mode_IN,  GPIO_PuPd_DOWN},
+    [GPIO_P5V0_PG]           = {PORTB, 14, GPIO_Mode_IN,  GPIO_PuPd_DOWN},
 
-    [GPIO_FPGA_RESET]       = { PORTB, 5, GPIO_Mode_OUT, GPIO_PuPd_DOWN },
-    [GPIO_FPGA_CONFIG_DONE] = { PORTA, 2, GPIO_Mode_IN,  GPIO_PuPd_UP },
-    [GPIO_FPGA_CRC_ERROR]   = { PORTA, 3, GPIO_Mode_IN,  GPIO_PuPd_UP },
+    [GPIO_P3V3_DIV]          = {PORTC,  0, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
+    [GPIO_P9V0_LO_DIV]       = {PORTC,  2, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
+    [GPIO_P9V0_REF_DIV]      = {PORTC,  3, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
+    [GPIO_P12V_DIV]          = {PORTA, 12, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
+    [GPIO_POCXO_DIV]         = {PORTC,  1, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
 
-    [GPIO_BP_PWR_ON]     = { PORTC, 6, GPIO_Mode_OUT, GPIO_PuPd_NOPULL },
+    [GPIO_PVADJ_OCXO_EN]     = {PORTA,  5, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+    [GPIO_OCXO_CURR]         = {PORTC,  4, GPIO_Mode_OUT, GPIO_PuPd_DOWN}, /* ? */
+    [GPIO_RESET_LOGIC]       = {PORTB,  5, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+
+    [GPIO_DCDC_EN_UCLK]      = {PORTB,  8, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+    [GPIO_DCDC_EN_SCLK]      = {PORTB,  9, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+    [GPIO_DCDC_EN_SER]       = {PORTB, 10, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+
+    [GPIO_DDS_REF_POWERDOWN] = {PORTA,  9, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+    [GPIO_DDS_LO_POWERDOWN]  = {PORTA, 10, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+    [GPIO_CLKA_POWERDOWN]    = {PORTA, 11, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+    [GPIO_CLKB_POWERDOWN]    = {PORTA, 12, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
+
+    [GPIO_BP_PWR_ON]         = {PORTC,  7, GPIO_Mode_OUT, GPIO_PuPd_NOPULL},
     /* Entry below should be up, but to allow running without crate make it down */
-    [GPIO_BP_ENABLE_N]   = { PORTC, 7, GPIO_Mode_IN,  GPIO_PuPd_DOWN   },
+    [GPIO_BP_ENABLE_N]       = {PORTC,  6, GPIO_Mode_IN,  GPIO_PuPd_UP},
 
-     /* For GPIO_GA* pull direction is overwriten in get_ipmb_addr() */
-    [GPIO_GA0]  = { PORTC, 13, GPIO_Mode_IN,  GPIO_PuPd_NOPULL   },
-    [GPIO_GA1]  = { PORTC, 14, GPIO_Mode_IN,  GPIO_PuPd_NOPULL   },
-    [GPIO_GA2]  = { PORTC, 15, GPIO_Mode_IN,  GPIO_PuPd_NOPULL   },
+    /* For GPIO_GA* pull direction is overwriten in get_ipmb_addr() */
+    [GPIO_GA0]               = {PORTC, 13, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
+    [GPIO_GA1]               = {PORTC, 14, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
+    [GPIO_GA2]               = {PORTC, 15, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
 };
 

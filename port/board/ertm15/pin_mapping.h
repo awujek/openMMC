@@ -20,20 +20,20 @@
  */
 
 /**
- * @defgroup ERTM14 eRTM14 Board Port
+ * @defgroup ERTM15 eRTM15 Board Port
  * @ingroup BOARD_PORTS
  */
 
 /**
- * @file ertm14/pin_mapping.h
- * @brief Hardware pin definitions for eRTM14
+ * @file ertm15/pin_mapping.h
+ * @brief Hardware pin definitions for eRTM15
  *
- * @ingroup ERTM14_PIN_MAPPING
+ * @ingroup ERTM15_PIN_MAPPING
  */
 
 /**
- * @defgroup ERTM14_PIN_MAPPING eRTM14 Pin Mapping
- * @ingroup ERTM14
+ * @defgroup ERTM15_PIN_MAPPING eRTM15 Pin Mapping
+ * @ingroup ERTM15
  * @{
  */
 
@@ -41,27 +41,52 @@
 #define PIN_MAPPING_H_
 
 enum pin_enum {
-    GPIO_LEDGREEN = 0,
-    GPIO_LEDRED = 1,
-    GPIO_SYNC_LEDGREEN,
-    GPIO_SYNC_LEDRED,
-    GPIO_P1V0_EN,
-    GPIO_P1V0_PG,
-    GPIO_P1V6_EN,
-    GPIO_P1V6_PG,
-    GPIO_P1V8_EN,
+    GPIO_LEDS_UCLK = 0,
+    GPIO_LEDS_SCLK,
+    GPIO_LEDS_SER,
+
+    GPIO_REF_LEDGREEN,   /* Serial GPIOs */
+    GPIO_REF_LEDRED,     /* Serial GPIOs */
+    GPIO_LO_LEDGREEN,    /* Serial GPIOs */
+    GPIO_LO_LEDRED,      /* Serial GPIOs */
+    GPIO_CLK_LEDGREEN,   /* Serial GPIOs */
+    GPIO_CLK_LEDRED,     /* Serial GPIOs */
+    GPIO_POWER_LEDGREEN, /* Serial GPIOs */
+    GPIO_POWER_LEDRED,   /* Serial GPIOs */
+
+    GPIO_DCDC_EN_UCLK,
+    GPIO_DCDC_EN_SCLK,
+    GPIO_DCDC_EN_SER,
+
+    GPIO_P3V6_EN,       /* Serial GPIOs */
+    GPIO_P3V3_EN,       /* Serial GPIOs */
+    GPIO_P1V8_EN,       /* Serial GPIOs */
+    GPIO_P3V3_PLL_EN,   /* Serial GPIOs */
+    GPIO_P5V0_EN,       /* Serial GPIOs */
+    GPIO_P9V0_LO_EN,    /* Serial GPIOs */
+    GPIO_P9V0_REF_EN,   /* Serial GPIOs */
+
     GPIO_P1V8_PG,
-    GPIO_P2V5_EN,
-    GPIO_P2V5_PG,
-    GPIO_P3V3_EN,
     GPIO_P3V3_PG,
-    GPIO_P3V8_EN,
-    GPIO_P3V8_PG,
-    GPIO_PS_GTX_EN,
-    GPIO_PS_GTX_PG,
-    GPIO_FPGA_RESET,
-    GPIO_FPGA_CONFIG_DONE,
-    GPIO_FPGA_CRC_ERROR,
+    GPIO_P3V3_PLL_PG,
+    GPIO_P3V6_PG,
+    GPIO_P5V0_PG,
+
+    GPIO_P3V3_DIV,
+    GPIO_P9V0_LO_DIV,
+    GPIO_P9V0_REF_DIV,
+    GPIO_P12V_DIV,
+    GPIO_POCXO_DIV,
+
+    GPIO_PVADJ_OCXO_EN,
+    GPIO_OCXO_CURR,
+    GPIO_RESET_LOGIC,
+
+    GPIO_DDS_REF_POWERDOWN,
+    GPIO_DDS_LO_POWERDOWN,
+    GPIO_CLKA_POWERDOWN,
+    GPIO_CLKB_POWERDOWN,
+
     GPIO_BP_PWR_ON,
     GPIO_BP_ENABLE_N,
     GPIO_GA0,
@@ -73,7 +98,7 @@ enum pin_enum {
 extern struct pin_def gpio_pins_def[GPIO_MAX];
 
 /* UART Interfaces */
-#define UART_DEBUG      1
+#define UART_DEBUG      1 /* TODO: fix */
 
 #endif
 

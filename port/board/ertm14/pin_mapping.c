@@ -67,9 +67,9 @@ struct pin_def gpio_pins_def[GPIO_MAX] =
     [GPIO_FPGA_CONFIG_DONE] = { PORTA, 2, GPIO_Mode_IN,  GPIO_PuPd_UP },
     [GPIO_FPGA_CRC_ERROR]   = { PORTA, 3, GPIO_Mode_IN,  GPIO_PuPd_UP },
 
-    [GPIO_BP_PWR_ON]     = { PORTC, 6, GPIO_Mode_OUT, GPIO_PuPd_NOPULL },
+    [GPIO_BP_PWR_ON]     = { PORTC, 7, GPIO_Mode_OUT, GPIO_PuPd_NOPULL },
     /* Entry below should be up, but to allow running without crate make it down */
-    [GPIO_BP_ENABLE_N]   = { PORTC, 7, GPIO_Mode_IN,  GPIO_PuPd_DOWN   },
+    [GPIO_BP_ENABLE_N]   = { PORTC, 6, GPIO_Mode_IN,  GPIO_PuPd_DOWN   },
 
      /* For GPIO_GA* pull direction is overwriten in get_ipmb_addr() */
     [GPIO_GA0]  = { PORTC, 13, GPIO_Mode_IN,  GPIO_PuPd_NOPULL   },

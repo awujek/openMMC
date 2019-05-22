@@ -28,8 +28,8 @@
 #include "port.h"
 
 /* UART configuration is a board specific */
-stm32_uart_cfg_t usart_cfg[6] = {
-    [1] = { USART1, RCC_APB2Periph_USART1, RCC_AHBPeriph_GPIOC, GPIOC, GPIO_PinSource4, GPIO_AF_7,
+stm32_uart_cfg_t usart_cfg[UART_MAX_CNT] = {
+    [1] = { USART1, RCC_APB2Periph_USART1, &RCC_APB2PeriphClockCmd, RCC_AHBPeriph_GPIOC, GPIOC, GPIO_PinSource4, GPIO_AF_7,
 		{ /* GPIO_InitStructure */
 		.GPIO_Pin = GPIO_Pin_4,
 		.GPIO_Mode = GPIO_Mode_AF,

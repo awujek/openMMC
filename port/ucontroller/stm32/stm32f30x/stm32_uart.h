@@ -33,6 +33,7 @@
 typedef struct stm32_uart_cfg {
     USART_TypeDef * dev;
     uint32_t periph;
+    void (*periph_func)(uint32_t RCC_APBXPeriph, FunctionalState NewState);
     uint32_t periph_port;
     GPIO_TypeDef *port;
     uint8_t pin_TX;
@@ -41,7 +42,10 @@ typedef struct stm32_uart_cfg {
     USART_InitTypeDef USART_InitStructure;
 } stm32_uart_cfg_t;
 
-extern stm32_uart_cfg_t usart_cfg[6];
+/* Add +1 since they're counted from 1 */
+#define UART_MAX_CNT (5+1)
+
+extern stm32_uart_cfg_t usart_cfg[UART_MAX_CNT];
 
 #define uart_set_baud( id, baud ) Chip_UART_SetBaud( usart_cfg[id].ptr, baud )
 #define uart_config_data( id, cfg ) Chip_UART_ConfigData( usart_cfg[id].ptr, cfg )

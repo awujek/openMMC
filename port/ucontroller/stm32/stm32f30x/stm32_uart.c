@@ -30,7 +30,7 @@
 void uart_init ( uint8_t id )
 {
   /* Enable GPIO & USART clock */
-  RCC_APB2PeriphClockCmd(usart_cfg[id].periph, ENABLE);
+  (*(usart_cfg[id].periph_func))(usart_cfg[id].periph, ENABLE);
   RCC_AHBPeriphClockCmd(usart_cfg[id].periph_port, ENABLE);
 
   /* Connect PC4 to USART1_Tx */

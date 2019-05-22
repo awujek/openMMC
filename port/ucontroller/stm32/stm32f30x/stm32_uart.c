@@ -27,28 +27,6 @@
 
 #include "port.h"
 
-stm32_uart_cfg_t usart_cfg[6] = {
-    [1] = { USART1, RCC_APB2Periph_USART1, RCC_AHBPeriph_GPIOC, GPIOC, GPIO_PinSource4, GPIO_AF_7, 
-		{ /* GPIO_InitStructure */
-		.GPIO_Pin = GPIO_Pin_4,
-		.GPIO_Mode = GPIO_Mode_AF,
-		.GPIO_Speed = GPIO_Speed_50MHz,
-		.GPIO_OType = GPIO_OType_PP,
-		.GPIO_PuPd = GPIO_PuPd_UP,
-		},
-		{ /* USART_InitStructure */
-		.USART_BaudRate = 115200,
-		.USART_WordLength = USART_WordLength_8b,
-		.USART_StopBits = USART_StopBits_1,
-		.USART_Parity = USART_Parity_No,
-		.USART_HardwareFlowControl = USART_HardwareFlowControl_None,
-		.USART_Mode = USART_Mode_Rx | USART_Mode_Tx,
-		}
-	},
-//     { USART2 },
-//     { USART3 }
-};
-
 void uart_init ( uint8_t id )
 {
   /* Enable GPIO & USART clock */

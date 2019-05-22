@@ -98,7 +98,8 @@ enum pin_enum {
 extern struct pin_def gpio_pins_def[GPIO_MAX];
 
 /* UART Interfaces */
-#define UART_DEBUG      1 /* TODO: fix */
+#define UART_DEBUG      5 /* Use pin PC12 for debug output,
+			   * TODO: conficts with FPGA_LINK! */
 
 #endif
 

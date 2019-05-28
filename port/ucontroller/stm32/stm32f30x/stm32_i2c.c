@@ -79,6 +79,27 @@ static void (* CPAL_I2C_TC_UserCallbackWrite_func)(CPAL_InitTypeDef* pDevInitStr
 static void (* cpal_write_func)(I2C_ID_T id) = cpal_write_spinlock;
 static void (* cpal_read_func)(I2C_ID_T id) = cpal_read_spinlock;
 
+void CPAL_I2C_ERR_UserCallback(CPAL_DevTypeDef pDevInstance, uint32_t DeviceError)
+{
+//     printf("%s, dev %d, error 0x%x\n", __func__, pDevInstance + 1, (int)DeviceError);
+    if (I2C_DevStructure[pDevInstance]->CPAL_State == CPAL_STATE_BUSY_RX) {
+// 	printf("%s, read callback\n", __func__);
+	/* If in read, call the callback. Upper layers shall handle read of 0
+	 * bytes */
+	CPAL_I2C_RXTC_UserCallback(I2C_DevStructure[pDevInstance]);
+	return;
+    }
+
+    if (I2C_DevStructure[pDevInstance]->CPAL_State == CPAL_STATE_BUSY_TX) {
+	// 	printf("%s, write callback\n", __func__);
+	/* If in write, call the callback. Upper layers shall handle write of 0
+	 * bytes */
+	CPAL_I2C_TXTC_UserCallback(I2C_DevStructure[pDevInstance]);
+	return;
+    }
+    printf("%s, unknown state... 0x%x\n", __func__, (int)I2C_DevStructure[pDevInstance]->CPAL_State);
+}
+
 static void CPAL_I2C_TC_UserCallback_read(CPAL_InitTypeDef* pDevInitStruct)
 {
     BaseType_t xHigherPriorityTaskWoken = pdTRUE;
@@ -190,11 +211,12 @@ static void cpal_read(I2C_ID_T id)
     i2c_xTaskToNotify_read[id] = xTaskGetCurrentTaskHandle();
 
     if (CPAL_I2C_Read(I2C_DevStructure[id]) != CPAL_PASS) {
-	printf("%s read failed state %x error %x\n", __func__,
+	printf("%s read failed state 0x%x error 0x%x\n", __func__,
 	       (int) I2C_DevStructure[id]->CPAL_State,
 	       (int) I2C_DevStructure[id]->wCPAL_DevError);
 	vTaskDelay(10);
-
+	i2c_xTaskToNotify_read[id] = NULL;
+	return;
     }
 
     /* Wait to be notified that the transmission is complete.  Note the first
@@ -226,7 +248,7 @@ static void cpal_write(I2C_ID_T id)
 	saved_state = I2C_DevStructure[id]->CPAL_State;
 	saved_mode = I2C_DevStructure[id]->CPAL_Mode;
 	saved_error = I2C_DevStructure[id]->wCPAL_DevError;
-
+	__CPAL_I2C_HAL_DISABLE_ADDRIE_IT(id);
 	/* Waiting for read in slave mode may be pending, force a write in
 	 * master mode */
 	I2C_DevStructure[id]->CPAL_State = CPAL_STATE_READY;
@@ -257,6 +279,7 @@ static void cpal_write(I2C_ID_T id)
 	I2C_DevStructure[id]->CPAL_Mode = saved_mode;
 	I2C_DevStructure[id]->wCPAL_DevError = saved_error;
 	__CPAL_I2C_HAL_ENABLE_STOPIE_IT(id);
+	__CPAL_I2C_HAL_ENABLE_ADDRIE_IT(id);
 	/* If I2C was waiting for a read before, then resume it */
 	if (saved_state == CPAL_STATE_READY) {
 	    CPAL_I2C_Read(I2C_DevStructure[id]);

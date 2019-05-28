@@ -396,13 +396,13 @@
 
    WARNING: These two defines are EXCLUSIVE, only one define should be uncommented !
  */
-//#define USE_SINGLE_ERROR_CALLBACK   /*<! select single UserCallbacks type */
+#define USE_SINGLE_ERROR_CALLBACK   /*<! select single UserCallbacks type */
 //#define USE_MULTIPLE_ERROR_CALLBACK /*<! select multiple UserCallbacks type */
 
 /* Error UserCallbacks : To use an Error UserCallback comment the relative define */
 
 /* Single Error Callback */
-#define CPAL_I2C_ERR_UserCallback       (void)
+//#define CPAL_I2C_ERR_UserCallback       (void)
 
 /* Multiple Error Callback */
 #define CPAL_I2C_BERR_UserCallback      (void)

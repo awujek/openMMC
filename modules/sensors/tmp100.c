@@ -71,7 +71,6 @@ void vTaskTMP100( void* Parameters )
     TickType_t xLastWakeTime = xTaskGetTickCount();
     uint8_t i2c_addr, i2c_interf;
     sensor_t * temp_sensor;
-    uint32_t temp;
     uint16_t converted_temp;
 
     for ( temp_sensor = sdr_head; temp_sensor != NULL; temp_sensor = temp_sensor->next) {
@@ -114,15 +113,18 @@ void vTaskTMP100( void* Parameters )
             if ( i2c_take_by_chipid( temp_sensor->chipid, &i2c_addr, &i2c_interf, portMAX_DELAY ) == pdTRUE ) {
                 /* Update the temperature reading */
 		if (tmp100_read(i2c_interf, i2c_addr, &converted_temp) == 2) {
-                    temp_sensor->readout_value = converted_temp;
-		    temp = converted_temp;
-		    temp *= 100;
-		    printf("%s %d.%02d\r\n", ((SDR_type_01h_t *)temp_sensor->sdr)->IDstring, (int)temp/25600, (int)(temp%25600)/256);
+		    /* The readout_value is uint16_t, but only one byte (LSB)
+		     * is transferred via IPMI.
+		     * Allow negative temperatures */
+                    temp_sensor->readout_value = converted_temp >> 8;
+// 		    temp = converted_temp;
+// 		    temp *= 100;
+// 		    printf("%s %d.%02d\r\n", ((SDR_type_01h_t *)temp_sensor->sdr)->IDstring, (int)temp/25600, (int)(temp%25600)/256);
                 }
 
-                /* Check for threshold events */
                 i2c_give(i2c_interf);
-                /* TODO: check_sensor_event(temp_sensor); */
+                /* Check for threshold events */
+		check_sensor_event(temp_sensor);
             }
         }
         vTaskDelayUntil( &xLastWakeTime, xFrequency );

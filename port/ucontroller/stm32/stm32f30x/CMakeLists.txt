@@ -16,7 +16,6 @@ set(UCONTROLLER_SRCS
    ${STM32F30X_PATH}/stm32_gpio.c
    ${STM32F30X_PATH}/stm32_timer.c
    ${STM32F30X_PATH}/stm32_i2c.c
-   ${STM32F30X_PATH}/stm32_i2c_dummy.c
   )
 
 set(UCONTROLLER_HDRS

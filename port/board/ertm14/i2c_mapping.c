@@ -14,9 +14,9 @@ i2c_bus_mapping_t i2c_bus_map[I2C_BUS_CNT] = {
 };
 
 i2c_chip_mapping_t i2c_chip_map[I2C_CHIP_CNT] = {
-    [CHIP_ID_TMP100_FPGA] = { I2C_BUS_TEMP_ID, 0x90 },
-    [CHIP_ID_TMP100_DCDC] = { I2C_BUS_TEMP_ID, 0x92 },
-    [CHIP_ID_MAC]         = { I2C_BUS_MAC_ID,  0xA0 },
+    [CHIP_ID_TMP100_FPGA] = { I2C_BUS_TEMP_ID, 0x48 },
+    [CHIP_ID_TMP100_DCDC] = { I2C_BUS_TEMP_ID, 0x49 },
+    [CHIP_ID_MAC]         = { I2C_BUS_MAC_ID,  0x50 },
 };
 
 bool i2c_set_mux_bus( uint8_t bus_id, i2c_mux_state_t *i2c_mux, int8_t new_state )

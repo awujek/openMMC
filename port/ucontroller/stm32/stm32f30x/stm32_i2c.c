@@ -339,10 +339,12 @@ static void cpal_read_spinlock(I2C_ID_T id)
     }
 }
 
+/* expects i2c addr < 0x80 */
 int xI2CMasterWrite(I2C_ID_T id, uint8_t addr, uint8_t *tx_buff, uint8_t tx_len)
 {
     int ret;
 
+    addr <<= 1;
 //    printf("%s: id %d addr 0x%x tx_len %d\n", __func__, id, addr, tx_len);
     while( xSemaphoreTake(i2c_acc_mutex[id], ( TickType_t ) 2000 ) != pdTRUE )
 	printf("%s: Unable to take sempaphore for i2c %d. Try once more time.\r\n", __func__, id);
@@ -363,9 +365,12 @@ int xI2CMasterWrite(I2C_ID_T id, uint8_t addr, uint8_t *tx_buff, uint8_t tx_len)
     return ret;
 }
 
+/* expects i2c addr < 0x80 */
 int xI2CMasterRead(I2C_ID_T id, uint8_t addr, uint8_t *rx_buff, uint8_t rx_len)
 {
     int ret;
+
+    addr <<= 1;
     while( xSemaphoreTake(i2c_acc_mutex[id], ( TickType_t ) 100 ) != pdTRUE )
 	printf("%s: Unable to take sempaphore for i2c %d. Try once more time.\r\n", __func__, id);
 
@@ -382,10 +387,12 @@ int xI2CMasterRead(I2C_ID_T id, uint8_t addr, uint8_t *rx_buff, uint8_t rx_len)
     return ret;
 }
 
+/* expects i2c addr < 0x80 */
 int xI2CMasterWriteRead(I2C_ID_T id, uint8_t addr, uint8_t cmd, uint8_t *rx_buff, uint8_t rx_len)
 {
     int ret;
 
+    addr <<= 1;
     while( xSemaphoreTake(i2c_acc_mutex[id], ( TickType_t ) 100 ) != pdTRUE )
 	printf("%s: Unable to take sempaphore for i2c %d. Try once more time.\r\n", __func__, id);
 
@@ -508,8 +515,10 @@ uint8_t xI2CSlaveReceive( I2C_ID_T id, uint8_t * rx_buff, uint8_t buff_len, uint
     return bytes_to_copy;
 }
 
+/* expects i2c addr < 0x80 */
 void vI2CSlaveSetup ( I2C_ID_T id, uint8_t slave_addr )
 {
+    slave_addr <<= 1;
     /* I2C already configured by vI2CConfig */
     I2C_DevStructure[id]->pCPAL_TransferRx->pbBuffer = recv_msg;
     I2C_DevStructure[id]->pCPAL_TransferRx->wNumData = (sizeof(recv_msg)/sizeof(recv_msg[0]));

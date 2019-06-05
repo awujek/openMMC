@@ -119,7 +119,10 @@ void vApplicationStackOverflowHook ( TaskHandle_t pxTask, signed char * pcTaskNa
     taskDISABLE_INTERRUPTS();
     /* Place a breakpoint here, so we know when there's a stack overflow */
     for ( ; ; ) {
-        uxTaskGetStackHighWaterMark(pxTask);
+	UBaseType_t ret;
+        ret = uxTaskGetStackHighWaterMark(pxTask);
+	printf("%s: task %s uxTaskGetStackHighWaterMark = %d\n", __func__, pcTaskName, (int) ret);
+//	configASSERT(0);
     }
 }
 #endif

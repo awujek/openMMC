@@ -16,6 +16,7 @@ set(TARGET_MODULES
   "TMP100"
   "EEPROM_24AA025E48"
   "FRU"
+  "STM32F3_ADC"
   )
 
 set(BOARD_PATH ${CMAKE_CURRENT_SOURCE_DIR})
@@ -37,6 +38,12 @@ if (";${TARGET_MODULES};" MATCHES ";FRU;")
   set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/board_fru.c)
   set(MODULES_FLAGS "${MODULES_FLAGS} -DMODULE_FRU")
 endif()
+
+if (";${TARGET_MODULES};" MATCHES ";STM32F3_ADC;")
+  set(PROJ_SRCS ${PROJ_SRCS} ${BOARD_PATH}/board_stm32f3_adc.c)
+  set(MODULES_FLAGS "${MODULES_FLAGS} -DMODULE_STM32F3_ADC")  # needed?
+endif()
+
 
 #Extra definitions
 if (FRU_WRITE_EEPROM)

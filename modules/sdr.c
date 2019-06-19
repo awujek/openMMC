@@ -32,6 +32,7 @@
 
 /* Project Includes */
 #include "sdr.h"
+#include "port.h"
 #include "sensors.h"
 #include "ipmi.h"
 #include "fpga_spi.h"
@@ -108,6 +109,9 @@ void sensor_init( void )
 #endif
 #ifdef MODULE_TMP100
     TMP100_init();
+#endif
+#ifdef MODULE_STM32F3_ADC
+    STM32F3_ADC_init();
 #endif
 
 }

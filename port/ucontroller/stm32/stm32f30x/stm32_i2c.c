@@ -275,14 +275,16 @@ static void cpal_write(I2C_ID_T id)
     /* If write for IPMB device */
     if (id == IPMB_I2C) {
 	/* Restore the saved mode and state */
-	I2C_DevStructure[id]->CPAL_State = saved_state;
 	I2C_DevStructure[id]->CPAL_Mode = saved_mode;
-	I2C_DevStructure[id]->wCPAL_DevError = saved_error;
 	__CPAL_I2C_HAL_ENABLE_STOPIE_IT(id);
 	__CPAL_I2C_HAL_ENABLE_ADDRIE_IT(id);
+	I2C_DevStructure[id]->wCPAL_DevError = saved_error;
 	/* If I2C was waiting for a read before, then resume it */
-	if (saved_state == CPAL_STATE_READY) {
-	    CPAL_I2C_Read(I2C_DevStructure[id]);
+	if (saved_state == CPAL_STATE_BUSY_RX) {
+	    if (CPAL_I2C_Read(I2C_DevStructure[id]) == CPAL_FAIL) {
+	    }
+	} else {
+	    I2C_DevStructure[id]->CPAL_State = saved_state;
 	}
     }
 

@@ -33,10 +33,14 @@ void uart_init ( uint8_t id )
   (*(usart_cfg[id].periph_func))(usart_cfg[id].periph, ENABLE);
   RCC_AHBPeriphClockCmd(usart_cfg[id].periph_port, ENABLE);
 
-  /* Connect PC4 to USART1_Tx */
-  GPIO_PinAFConfig(usart_cfg[id].port, usart_cfg[id].pin_TX, usart_cfg[id].gpio_af_TX);
-
-  GPIO_Init(usart_cfg[id].port, &usart_cfg[id].GPIO_InitStructure);
+  /* Configure TX if enabled */
+  if (usart_cfg[id].pin_mask & STM32_UART_ENABLE_TX)
+    GPIO_PinAFConfig(usart_cfg[id].port, usart_cfg[id].pin_TX, usart_cfg[id].gpio_af_TX);
+  GPIO_Init(usart_cfg[id].port, &usart_cfg[id].GPIO_InitStructure_TX);
+  /* Configure RX if enabled */
+  if (usart_cfg[id].pin_mask & STM32_UART_ENABLE_RX)
+    GPIO_PinAFConfig(usart_cfg[id].port, usart_cfg[id].pin_RX, usart_cfg[id].gpio_af_RX);
+  GPIO_Init(usart_cfg[id].port, &usart_cfg[id].GPIO_InitStructure_RX);
 
   USART_Init(usart_cfg[id].dev, &usart_cfg[id].USART_InitStructure);
 

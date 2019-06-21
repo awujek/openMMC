@@ -30,14 +30,18 @@
 /* UART configuration is a board specific */
 stm32_uart_cfg_t usart_cfg[UART_MAX_CNT] = {
     /* Use TX of uart5 on portC12 */
-    [5] = { UART5, RCC_APB1Periph_UART5, &RCC_APB1PeriphClockCmd, RCC_AHBPeriph_GPIOC, GPIOC, GPIO_PinSource12, GPIO_AF_5,
-		{ /* GPIO_InitStructure */
+    [5] = { UART5, RCC_APB1Periph_UART5, &RCC_APB1PeriphClockCmd, RCC_AHBPeriph_GPIOC, GPIOC,
+		STM32_UART_ENABLE_TX,
+		GPIO_PinSource12, GPIO_AF_5,
+		0,0, /* No RX */
+		{ /* GPIO_InitStructure_TX */
 		.GPIO_Pin = GPIO_Pin_12,
 		.GPIO_Mode = GPIO_Mode_AF,
 		.GPIO_Speed = GPIO_Speed_50MHz,
 		.GPIO_OType = GPIO_OType_PP,
 		.GPIO_PuPd = GPIO_PuPd_UP,
 		},
+		{}, /* No RX */
 		{ /* USART_InitStructure */
 		.USART_BaudRate = 115200,
 		.USART_WordLength = USART_WordLength_8b,

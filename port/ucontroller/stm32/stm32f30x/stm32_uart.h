@@ -30,15 +30,22 @@
 #include "string.h"
 #include "stdio.h"
 
+#define STM32_UART_ENABLE_RX 1
+#define STM32_UART_ENABLE_TX 2
+
 typedef struct stm32_uart_cfg {
     USART_TypeDef * dev;
     uint32_t periph;
     void (*periph_func)(uint32_t RCC_APBXPeriph, FunctionalState NewState);
     uint32_t periph_port;
     GPIO_TypeDef *port;
+    uint8_t pin_mask;
     uint8_t pin_TX;
     uint8_t gpio_af_TX;
-    GPIO_InitTypeDef GPIO_InitStructure;
+    uint8_t pin_RX;
+    uint8_t gpio_af_RX;
+    GPIO_InitTypeDef GPIO_InitStructure_TX;
+    GPIO_InitTypeDef GPIO_InitStructure_RX;
     USART_InitTypeDef USART_InitStructure;
 } stm32_uart_cfg_t;
 

@@ -36,6 +36,9 @@
 #include "fru.h"
 #include "scansta1101.h"
 #include "fpga_spi.h"
+#ifdef MODULE_FPGA_UART
+#include "fpga_uart.h"
+#endif
 #include "watchdog.h"
 #include "uart_debug.h"
 #ifdef MODULE_RTM
@@ -88,6 +91,10 @@ int main( void )
 #ifdef MODULE_FPGA_SPI
     fpga_spi_init();
 #endif
+#ifdef MODULE_FPGA_UART
+    fpga_uart_init();
+#endif
+
 #ifdef MODULE_RTM
     rtm_manage_init();
 #endif

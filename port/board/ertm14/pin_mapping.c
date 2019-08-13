@@ -78,5 +78,8 @@ struct pin_def gpio_pins_def[GPIO_MAX] =
     [GPIO_GA0]  = { PORTC, 13, GPIO_Mode_IN,  GPIO_PuPd_NOPULL   },
     [GPIO_GA1]  = { PORTC, 14, GPIO_Mode_IN,  GPIO_PuPd_NOPULL   },
     [GPIO_GA2]  = { PORTC, 15, GPIO_Mode_IN,  GPIO_PuPd_NOPULL   },
+
+    [GPIO_UART3_RX]  = { PORTC, 10, GPIO_Mode_IN,  GPIO_PuPd_NOPULL   },
+    [GPIO_UART3_TX]  = { PORTC, 11, GPIO_Mode_IN,  GPIO_PuPd_NOPULL   },
 };
 

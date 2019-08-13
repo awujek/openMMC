@@ -51,5 +51,31 @@ stm32_uart_cfg_t usart_cfg[UART_MAX_CNT] = {
 		}
 	},
 //     { USART2 },
-//     { USART3 }
+    [3] = { USART3, RCC_APB1Periph_USART3, &RCC_APB1PeriphClockCmd, RCC_AHBPeriph_GPIOC, GPIOC,
+		STM32_UART_ENABLE_TX | STM32_UART_ENABLE_RX,
+		GPIO_PinSource10, GPIO_AF_7, /* TX */
+		GPIO_PinSource11, GPIO_AF_7, /* RX */
+		{ /* GPIO_InitStructure_TX */
+		.GPIO_Pin = GPIO_Pin_10,
+		.GPIO_Mode = GPIO_Mode_AF,
+		.GPIO_Speed = GPIO_Speed_50MHz,
+		.GPIO_OType = GPIO_OType_PP,
+		.GPIO_PuPd = GPIO_PuPd_UP,
+		},
+		{  /* GPIO_InitStructure_RX */
+		.GPIO_Pin = GPIO_Pin_11,
+		.GPIO_Mode = GPIO_Mode_AF,
+		.GPIO_Speed = GPIO_Speed_50MHz,
+		.GPIO_OType = GPIO_OType_PP,
+		.GPIO_PuPd = GPIO_PuPd_NOPULL,
+		},
+		{ /* USART_InitStructure */
+		.USART_BaudRate = 115200,
+		.USART_WordLength = USART_WordLength_8b,
+		.USART_StopBits = USART_StopBits_1,
+		.USART_Parity = USART_Parity_No,
+		.USART_HardwareFlowControl = USART_HardwareFlowControl_None,
+		.USART_Mode = USART_Mode_Rx | USART_Mode_Tx,
+		}
+	},
 };

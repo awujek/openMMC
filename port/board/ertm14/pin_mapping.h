@@ -69,6 +69,8 @@ enum pin_enum {
     GPIO_GA0,
     GPIO_GA1,
     GPIO_GA2,
+    GPIO_UART3_RX,
+    GPIO_UART3_TX,
     GPIO_MAX
 };
 

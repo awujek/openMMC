@@ -61,7 +61,7 @@ extern stm32_uart_cfg_t usart_cfg[UART_MAX_CNT];
 #define uart_int_enable( id, mask ) Chip_UART_IntEnable( usart_cfg[id].ptr, mask )
 #define uart_int_disable( id, mask ) Chip_UART_IntDisable( usart_cfg[id].ptr, mask )
 #define uart_send_char( id, ch ) usart_blocking_write(id, ch)
-#define uart_read_char( id ) Chip_UART_ReadByte( usart_cfg[id].ptr )
+#define uart_read_char( id ) usart_blocking_read( id )
 #define uart_send( id, msg, len ) usart_write_buf(id, msg, len )
 #define uart_read( id, buf, len ) Chip_UART_ReadBlocking( usart_cfg[id].ptr, buf, len )
 
@@ -69,5 +69,7 @@ void uart_init ( uint8_t id );
 
 void usart_blocking_write(int id, int ch);
 int usart_write_buf(int id, int *buf, size_t n);
+
+uint16_t usart_blocking_read(int id);
 
 #endif

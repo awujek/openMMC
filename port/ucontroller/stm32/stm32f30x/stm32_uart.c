@@ -26,6 +26,7 @@
  */
 
 #include "port.h"
+#include "task.h"
 
 void uart_init ( uint8_t id )
 {
@@ -33,14 +34,17 @@ void uart_init ( uint8_t id )
   (*(usart_cfg[id].periph_func))(usart_cfg[id].periph, ENABLE);
   RCC_AHBPeriphClockCmd(usart_cfg[id].periph_port, ENABLE);
 
-  /* Configure TX if enabled */
-  if (usart_cfg[id].pin_mask & STM32_UART_ENABLE_TX)
-    GPIO_PinAFConfig(usart_cfg[id].port, usart_cfg[id].pin_TX, usart_cfg[id].gpio_af_TX);
-  GPIO_Init(usart_cfg[id].port, &usart_cfg[id].GPIO_InitStructure_TX);
   /* Configure RX if enabled */
-  if (usart_cfg[id].pin_mask & STM32_UART_ENABLE_RX)
+  if (usart_cfg[id].pin_mask & STM32_UART_ENABLE_RX) {
     GPIO_PinAFConfig(usart_cfg[id].port, usart_cfg[id].pin_RX, usart_cfg[id].gpio_af_RX);
-  GPIO_Init(usart_cfg[id].port, &usart_cfg[id].GPIO_InitStructure_RX);
+    GPIO_Init(usart_cfg[id].port, &usart_cfg[id].GPIO_InitStructure_RX);
+  }
+
+  /* Configure TX if enabled */
+  if (usart_cfg[id].pin_mask & STM32_UART_ENABLE_TX) {
+    GPIO_PinAFConfig(usart_cfg[id].port, usart_cfg[id].pin_TX, usart_cfg[id].gpio_af_TX);
+    GPIO_Init(usart_cfg[id].port, &usart_cfg[id].GPIO_InitStructure_TX);
+  }
 
   USART_Init(usart_cfg[id].dev, &usart_cfg[id].USART_InitStructure);
 
@@ -59,6 +63,20 @@ void usart_blocking_write(int id, int ch)
   /* e.g. write a character to the USART */
    USART_SendData(usart_cfg[id].dev, (uint8_t)ch);
 }
+
+/* to be called only from tasks! (due to vTaskDelay */
+uint16_t usart_blocking_read(int id)
+{
+/* Loop until transmit data register is empty */
+   while (USART_GetFlagStatus(usart_cfg[id].dev, USART_FLAG_RXNE) == RESET)
+  {
+    vTaskDelay(100);
+  }
+
+  /* e.g. write a character to the USART */
+   return USART_ReceiveData(usart_cfg[id].dev);
+}
+
 
 int usart_write_buf(int id, int *buf, size_t n)
 {

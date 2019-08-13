@@ -72,14 +72,14 @@ enum pin_enum {
     GPIO_P3V6_PG,
     GPIO_P5V0_PG,
 
-    GPIO_P3V3_DIV,
-    GPIO_P9V0_LO_DIV,
-    GPIO_P9V0_REF_DIV,
-    GPIO_P12V_DIV,
-    GPIO_POCXO_DIV,
+    GPIO_P3V3_DIV,      /* ADC*/
+    GPIO_P9V0_LO_DIV,   /* ADC*/
+    GPIO_P9V0_REF_DIV,  /* ADC*/
+    GPIO_P12V_DIV,      /* ADC*/
+    GPIO_POCXO_DIV,     /* ADC*/
+    GPIO_OCXO_CURR,     /* ADC*/
 
     GPIO_PVADJ_OCXO_EN,
-    GPIO_OCXO_CURR,
     GPIO_RESET_LOGIC,
 
     GPIO_DDS_REF_POWERDOWN,

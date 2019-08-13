@@ -53,14 +53,15 @@ struct pin_def gpio_pins_def[GPIO_MAX] =
     [GPIO_P3V6_PG]           = {PORTB, 11, GPIO_Mode_IN,  GPIO_PuPd_DOWN},
     [GPIO_P5V0_PG]           = {PORTB, 14, GPIO_Mode_IN,  GPIO_PuPd_DOWN},
 
-    [GPIO_P3V3_DIV]          = {PORTC,  0, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
-    [GPIO_P9V0_LO_DIV]       = {PORTC,  2, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
-    [GPIO_P9V0_REF_DIV]      = {PORTC,  3, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
-    [GPIO_P12V_DIV]          = {PORTA, 12, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
-    [GPIO_POCXO_DIV]         = {PORTC,  1, GPIO_Mode_IN,  GPIO_PuPd_NOPULL},
+    /* ADC */
+    [GPIO_P3V3_DIV]          = {PORTC,  0, GPIO_Mode_AN,  GPIO_PuPd_NOPULL},
+    [GPIO_P9V0_LO_DIV]       = {PORTC,  2, GPIO_Mode_AN,  GPIO_PuPd_NOPULL},
+    [GPIO_P9V0_REF_DIV]      = {PORTC,  3, GPIO_Mode_AN,  GPIO_PuPd_NOPULL},
+    [GPIO_P12V_DIV]          = {PORTA,  2, GPIO_Mode_AN,  GPIO_PuPd_NOPULL},
+    [GPIO_POCXO_DIV]         = {PORTC,  1, GPIO_Mode_AN,  GPIO_PuPd_NOPULL},
+    [GPIO_OCXO_CURR]         = {PORTC,  4, GPIO_Mode_AN,  GPIO_PuPd_NOPULL},
 
     [GPIO_PVADJ_OCXO_EN]     = {PORTA,  5, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
-    [GPIO_OCXO_CURR]         = {PORTC,  4, GPIO_Mode_OUT, GPIO_PuPd_DOWN}, /* ? */
     [GPIO_RESET_LOGIC]       = {PORTB,  5, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
 
     [GPIO_DCDC_EN_UCLK]      = {PORTB,  8, GPIO_Mode_OUT, GPIO_PuPd_DOWN},
